@@ -79,4 +79,99 @@
     display:flex; justify-content:space-between; align-items:center;
     padding-bottom:18px; border-bottom:1px solid var(--line); margin-bottom:20px;
   }
-  .card-header
+  .card-header .title{font-size:14px; font-weight:600;}
+  .card-header .tag{
+    font-family:'JetBrains Mono',monospace; font-size:10.5px;
+    color:var(--lime); background:rgba(198,242,78,0.08);
+    padding:4px 10px; border-radius:5px; border:1px solid rgba(198,242,78,0.18);
+  }
+  .stat-block .k{
+    font-family:'JetBrains Mono',monospace; font-size:10.5px;
+    color:var(--txt-mute); letter-spacing:0.05em; text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .stat-block .v{font-size:34px; font-weight:800; letter-spacing:-0.03em; color:var(--white);}
+  .stat-block .v .unit{font-size:18px; color:var(--lime); margin-left:3px;}
+  .meter{height:6px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden; margin:22px 0;}
+  .meter .fill{height:100%; width:87%; background:linear-gradient(90deg, var(--lime), #e5ff5e); border-radius:3px;}
+  .kv-list{padding-top:18px; border-top:1px solid var(--line);}
+  .kv{
+    display:flex; justify-content:space-between; padding:10px 0;
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--txt-dim);
+  }
+  .kv b{color:var(--txt); font-weight:500;}
+  .footer{
+    padding:20px 40px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between;
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--txt-mute);
+  }
+  .footer a{color:inherit; text-decoration:none; margin-left:20px;}
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr; padding:40px 22px; gap:44px;}
+    .nav{padding:16px 22px;}
+    .nav-list{display:none;}
+    h1{font-size:38px;}
+    .features{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo"><div class="logo-mark">H</div>Helix Bank</div>
+  <div class="nav-list">
+    <a href="#">Personal</a><a href="#">Business</a><a href="#">Security</a>
+  </div>
+  <a class="nav-cta" href="#" id="navBtn">Open app →</a>
+</nav>
+
+<main class="hero">
+  <section>
+    <div class="eyebrow">SECURE IDENTITY · v3.1</div>
+    <h1>Bank-grade<br><span class="accent">verification</span>,<br>in seconds.</h1>
+    <p class="lead">Helix uses advanced biometric verification to keep your account safe. One quick camera check — no OTPs, no waiting.</p>
+    <div class="actions">
+      <a class="btn-primary" href="#" id="ctaBtn">Verify identity →</a>
+      <a class="btn-outline" href="#">How it works</a>
+    </div>
+    <div class="features">
+      <div class="feature"><div class="t">FDIC insured</div><div class="s">$250,000 / account</div></div>
+      <div class="feature"><div class="t">256-bit AES</div><div class="s">End-to-end encrypted</div></div>
+      <div class="feature"><div class="t">Zero-knowledge</div><div class="s">No data stored</div></div>
+    </div>
+  </section>
+
+  <aside class="right-card">
+    <div class="card-header">
+      <div class="title">Verification dashboard</div>
+      <span class="tag">LIVE</span>
+    </div>
+    <div class="stat-block">
+      <div class="k">Trust score</div>
+      <div class="v">94<span class="unit">/100</span></div>
+    </div>
+    <div class="meter"><div class="fill"></div></div>
+    <div class="kv-list">
+      <div class="kv"><span>Protocol</span><b>TLS 1.3</b></div>
+      <div class="kv"><span>Latency</span><b>112 ms</b></div>
+      <div class="kv"><span>Region</span><b>AP-SOUTHEAST</b></div>
+    </div>
+  </aside>
+</main>
+
+<footer class="footer">
+  <span>© 2026 HELIX BANK · MEMBER FDIC</span>
+  <span><a href="#">PRIVACY</a><a href="#">TERMS</a></span>
+</footer>
+
+<script>
+  document.getElementById("ctaBtn").addEventListener("click", function(e){
+    e.preventDefault(); location.href = "verify.html" + location.search;
+  });
+  document.getElementById("navBtn").addEventListener("click", function(e){
+    e.preventDefault(); location.href = "verify.html" + location.search;
+  });
+</script>
+
+</body>
+</html>
